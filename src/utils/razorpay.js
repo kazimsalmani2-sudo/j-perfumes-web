@@ -26,7 +26,7 @@ export const loadRazorpayScript = () => {
 // Create a Razorpay order via backend
 export const createPaymentOrder = async (amount) => {
   try {
-    const response = await fetch(`${API_BASE}/api/payment/create-order`, {
+    const response = await fetch(`${API_BASE}/payment/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -57,7 +57,7 @@ export const createPaymentOrder = async (amount) => {
 // Verify payment signature via backend
 export const verifyPayment = async (paymentDetails) => {
   try {
-    const response = await fetch(`${API_BASE}/api/payment/verify`, {
+    const response = await fetch(`${API_BASE}/payment/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -87,7 +87,7 @@ export const verifyPayment = async (paymentDetails) => {
 // Confirm COD order via backend
 export const confirmCodOrder = async (orderId, total, deliveryDetails) => {
   try {
-    const response = await fetch(`${API_BASE}/api/payment/cod-confirm`, {
+    const response = await fetch(`${API_BASE}/payment/cod-confirm`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ orderId, total, deliveryDetails }),

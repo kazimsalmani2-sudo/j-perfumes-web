@@ -11,7 +11,7 @@ const API_BASE = import.meta.env.VITE_PAYMENT_API_URL || 'http://localhost:5000'
  */
 export const sendOtpApi = async (phone, email) => {
   try {
-    const response = await fetch(`${API_BASE}/api/otp/send`, {
+    const response = await fetch(`${API_BASE}/otp/send`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone, email }),
@@ -40,7 +40,7 @@ export const sendOtpApi = async (phone, email) => {
  */
 export const verifyOtpApi = async (phone, email, otp) => {
   try {
-    const response = await fetch(`${API_BASE}/api/otp/verify`, {
+    const response = await fetch(`${API_BASE}/otp/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone, email, otp }),

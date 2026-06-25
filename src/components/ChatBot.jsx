@@ -140,7 +140,7 @@ export default function ChatBot() {
     const fallbackGreeting = "Hello! I'm J-Fragrance AI, your personal luxury scent advisor ✨ What's your skin type? (Oily / Dry / Normal / Combination)";
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+      const res = await fetch(`${BACKEND_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: initMsg }),
@@ -196,7 +196,7 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+      const res = await fetch(`${BACKEND_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: newApiMessages }),
