@@ -36,20 +36,7 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrolled(currentScrollY > 20);
-      
-      if (currentScrollY > 80) {
-        if (currentScrollY > lastScrollY) {
-          // Scrolling down -> hide navbar
-          setVisible(false);
-        } else {
-          // Scrolling up -> show navbar
-          setVisible(true);
-        }
-      } else {
-        // Near top -> always show
-        setVisible(true);
-      }
-      
+      setVisible(true); // Always keep it visible
       lastScrollY = currentScrollY;
     };
     
