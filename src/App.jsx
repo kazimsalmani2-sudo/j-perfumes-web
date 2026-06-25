@@ -11,7 +11,6 @@ import AuthGate from './components/AuthGate';
 import ChatBot from './components/ChatBot';
 
 // Pages
-import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
@@ -43,21 +42,20 @@ function AppContent() {
       <div className="main-content">
         <Routes>
           {/* Public routes */}
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:id" element={<ProductDetail />} />
+          <Route path="/attars" element={<RouteWrapper><Attars /></RouteWrapper>} />
+          <Route path="/gift-sets" element={<GiftSets />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
 
           {/* Protected routes */}
-          <Route path="/home" element={<AuthGate><Home /></AuthGate>} />
-          <Route path="/collections" element={<AuthGate><Collections /></AuthGate>} />
-          <Route path="/shop" element={<AuthGate><Shop /></AuthGate>} />
-          <Route path="/shop/:id" element={<AuthGate><ProductDetail /></AuthGate>} />
-          <Route path="/attars" element={<AuthGate><RouteWrapper><Attars /></RouteWrapper></AuthGate>} />
-          <Route path="/gift-sets" element={<AuthGate><GiftSets /></AuthGate>} />
-          <Route path="/about" element={<AuthGate><About /></AuthGate>} />
-          <Route path="/contact" element={<AuthGate><Contact /></AuthGate>} />
-          <Route path="/cart" element={<AuthGate><Cart /></AuthGate>} />
           <Route path="/checkout" element={<AuthGate><Checkout /></AuthGate>} />
           <Route path="/order-confirmation" element={<AuthGate><OrderConfirmation /></AuthGate>} />
           <Route path="/wishlist" element={<AuthGate><Wishlist /></AuthGate>} />

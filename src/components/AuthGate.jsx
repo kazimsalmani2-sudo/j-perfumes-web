@@ -6,13 +6,6 @@ const AuthGate = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // Allow these pages without login:
-  const publicRoutes = ["/", "/login", "/register", "/forgot-password"];
-
-  const isPublicRoute = publicRoutes.includes(location.pathname);
-  const isGuest = sessionStorage.getItem("guestMode") === "true" || !user;
-
-  // Show loading spinner while checking auth
   if (loading) {
     return (
       <div style={{
@@ -40,15 +33,8 @@ const AuthGate = ({ children }) => {
     );
   }
 
-  // If not logged in, not on guest mode, and not on public route → redirect to landing
-  if (!user && !isGuest && !isPublicRoute) {
-    return <Navigate to="/" state={{ from: location }} replace />;
-  }
-
-  // If guest tries to access guest-blocked routes (checkout or confirmation) → redirect to login
-  const guestBlockedRoutes = ["/checkout", "/order-confirmation"];
-  const isGuestBlocked = guestBlockedRoutes.includes(location.pathname);
-  if (!user && isGuest && isGuestBlocked) {
+  // If not logged in, redirect to login page
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
