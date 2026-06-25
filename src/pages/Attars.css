@@ -1,0 +1,112 @@
+/* ============= ATTARS PAGE ============= */
+.attars-page {}
+
+.attars-hero {
+  background: linear-gradient(135deg, #1A1200 0%, #2D1F00 50%, #1A1200 100%);
+  padding: 120px 0 80px;
+  border-bottom: 2px solid var(--gold-dark);
+}
+
+.attars-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.attars-hero-title {
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+
+.attars-gold {
+  color: var(--gold-dark);
+  font-style: italic;
+}
+
+.attars-hero-body {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+}
+
+.attars-hero-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.attar-fact {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.attar-fact-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: rgba(184,150,12,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184,150,12,0.3);
+}
+
+.attar-fact-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold-dark);
+  margin-bottom: 4px;
+}
+
+.attar-fact-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+.attars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.attars-cta {
+  background: var(--off-white);
+  padding: 80px 0;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+}
+
+.attars-cta-title {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.attars-cta-body {
+  font-size: 15px;
+  color: var(--text-grey);
+  margin-bottom: 28px;
+}
+
+.section-center-header { text-align: center; margin-bottom: 0; }
+.section-center-header .section-label { justify-content: center; margin-bottom: 12px; }
+.section-title { font-size: clamp(28px, 3vw, 40px); font-weight: 400; }
+.section-subtitle { font-size: 15px; color: var(--text-grey); line-height: 1.6; margin-top: 12px; }
+
+@media (max-width: 1024px) {
+  .attars-hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .attars-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .attars-grid { grid-template-columns: 1fr; }
+}
