@@ -42,8 +42,8 @@ function detectQuickReplies(botMessage) {
 
 function TypingIndicator() {
   return (
-    <div className="chat-bubble bot typing-bubble">
-      <div className="bot-avatar">JF</div>
+    <div className="chat-bubble-wrapper bot-wrapper">
+      <div className="bot-avatar-sm">JF</div>
       <div className="typing-dots">
         <span /><span /><span />
       </div>

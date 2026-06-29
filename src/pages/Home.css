@@ -330,11 +330,13 @@
   margin-bottom: 20px;
 }
 
-.white-text { color: var(--white); }
+.white-text {
+  color: var(--white);
+}
 
 .new-arrivals-body {
   font-size: 14px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.55);
   line-height: 1.75;
   margin-bottom: 32px;
   max-width: 360px;
@@ -348,7 +350,7 @@
 
 .new-arrival-card {
   background: #1A1A1A;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   transition: var(--transition);
 }
 
@@ -664,6 +666,7 @@
   .products-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .new-arrivals-cards {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -717,7 +720,9 @@
     gap: 20px;
   }
 
-  .stat-num { font-size: 22px; }
+  .stat-num {
+    font-size: 22px;
+  }
 
   .section-header {
     flex-direction: column;
@@ -753,6 +758,11 @@
 }
 
 @media (max-width: 480px) {
-  .hero-heading { font-size: 32px; }
-  .section-title { font-size: 28px; }
+  .hero-heading {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
 }

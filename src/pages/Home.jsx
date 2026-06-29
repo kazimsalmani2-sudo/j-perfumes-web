@@ -86,7 +86,7 @@ function Collections() {
   const navigate = useNavigate();
 
   const getBadgeClass = (type) => {
-    switch(type) {
+    switch (type) {
       case 'gold': return 'badge badge-gold';
       case 'dark': return 'badge badge-dark';
       default: return 'badge badge-gold';
@@ -202,7 +202,7 @@ function NewArrivals() {
         <div className="new-arrivals-left">
           <div className="section-label left-only">
             <span className="label-line-dark"></span>
-            <span style={{color: 'var(--gold-dark)'}}>JUST ARRIVED</span>
+            <span style={{ color: 'var(--gold-dark)' }}>JUST ARRIVED</span>
           </div>
           <h2 className="new-arrivals-heading">
             <span className="white-text">New</span><br />
@@ -225,7 +225,7 @@ function NewArrivals() {
                 <img src={product.image} alt={product.name} loading="lazy" />
               </div>
               <div className="new-arrival-body">
-                <div className="product-notes" style={{color: 'rgba(255,255,255,0.4)'}}>{product.notes}</div>
+                <div className="product-notes" style={{ color: 'rgba(255,255,255,0.4)' }}>{product.notes}</div>
                 <h3 className="new-arrival-name">{product.name}</h3>
                 <div className="new-arrival-footer">
                   <span className="new-arrival-price">₹{product.price.toLocaleString()}</span>
@@ -235,7 +235,7 @@ function NewArrivals() {
                     id={`new-add-${product.id}`}
                   >
                     <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 6M7 13L5.4 5M7 13l-1.35 2.7A1 1 0 007 17h10m0 0a2 2 0 100 4 2 2 0 000-4zm-10 2a2 2 0 100 4 2 2 0 000-4z"/>
+                      <path d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5 6M7 13L5.4 5M7 13l-1.35 2.7A1 1 0 007 17h10m0 0a2 2 0 100 4 2 2 0 000-4zm-10 2a2 2 0 100 4 2 2 0 000-4z" />
                     </svg>
                     {addedIds.includes(product.id) ? 'ADDED' : 'ADD'}
                   </button>
@@ -325,7 +325,7 @@ function Testimonials() {
               <div className="testimonial-quote">"</div>
               <div className="testimonial-stars">
                 {Array.from({ length: t.rating }, (_, i) => (
-                  <span key={i} style={{color: 'var(--gold-dark)'}}>★</span>
+                  <span key={i} style={{ color: 'var(--gold-dark)' }}>★</span>
                 ))}
               </div>
               <p className="testimonial-text">"{t.text}"</p>
