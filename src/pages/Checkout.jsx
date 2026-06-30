@@ -459,29 +459,13 @@ export default function Checkout() {
                 <div className="otp-body">
                   <h2 className="checkout-form-title">Verify Your Identity</h2>
 
-                  {emailSent ? (
-                    <p className="otp-description">
-                      A 4-digit verification code has been sent to <strong>{form.email}</strong>. Please check your inbox (and spam folder).
-                    </p>
-                  ) : (
-                    <p className="otp-description">
-                      Email delivery failed. Use the code shown below to continue:
-                    </p>
-                  )}
-
-                  {/* Show OTP on screen if email wasn't delivered */}
-                  {!emailSent && mockOtpCode && (
-                    <div style={{
-                      background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-                      border: '2px dashed #b8960c',
-                      borderRadius: '10px',
-                      padding: '16px 24px',
-                      textAlign: 'center',
-                      margin: '16px 0',
-                    }}>
-                      <p style={{ margin: '0 0 6px', fontSize: '12px', color: '#92400e', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Your Verification Code</p>
-                      <p style={{ margin: 0, fontSize: '38px', fontWeight: 800, letterSpacing: '12px', color: '#b8960c', paddingLeft: '12px' }}>{mockOtpCode}</p>
-                      <p style={{ margin: '8px 0 0', fontSize: '11px', color: '#78350f' }}>⚠️ Email delivery failed — enter this code below</p>
+                  <p className="otp-description">
+                    A 4-digit verification code has been sent to <strong>{form.email}</strong>. Please check your inbox (and spam folder).
+                  </p>
+                  {mockOtpCode && (
+                    <div style={{ marginTop: '10px', padding: '10px 15px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '6px', fontSize: '13px', textAlign: 'center', fontWeight: 'bold', border: '1px solid #ffeeba', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <span>🔑 local testing mode</span>
+                      <span style={{ fontSize: '18px', color: '#b8960c', letterSpacing: '2px' }}>OTP Code: {mockOtpCode}</span>
                     </div>
                   )}
 
