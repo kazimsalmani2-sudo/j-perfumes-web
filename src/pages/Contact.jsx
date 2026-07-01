@@ -2,15 +2,37 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
 import './Contact.css';
 
+const API_BASE = import.meta.env.VITE_PAYMENT_API_URL || 'http://localhost:5000';
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+        setForm({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setSubmitted(false), 6000);
+      } else {
+        setError(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (err) {
+      setError('Could not reach server. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -128,13 +150,18 @@ export default function Contact() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-gold btn-full" id="contact-submit-btn">
-                  SEND MESSAGE <Send size={14} />
+                <button type="submit" className="btn btn-gold btn-full" id="contact-submit-btn" disabled={loading}>
+                  {loading ? 'SENDING...' : <><span>SEND MESSAGE</span> <Send size={14} /></>}
                 </button>
 
                 {submitted && (
                   <div className="alert alert-success mt-4">
-                    Thank you! Your message has been sent. We will reply shortly.
+                    ✅ Thank you! Your message has been sent to our team. We will reply shortly.
+                  </div>
+                )}
+                {error && (
+                  <div className="alert alert-error mt-4" style={{ color: '#ef4444', background: '#fef2f2', border: '1px solid #fee2e2', padding: '12px', borderRadius: '4px', fontSize: '13px' }}>
+                    ❌ {error}
                   </div>
                 )}
               </form>

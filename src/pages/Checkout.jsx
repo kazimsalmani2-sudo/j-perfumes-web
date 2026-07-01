@@ -108,8 +108,8 @@ export default function Checkout() {
   const [otpLoading, setOtpLoading] = useState(false);
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [otpError, setOtpError] = useState('');
-  const [mockOtpCode, setMockOtpCode] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  const [fallbackOtp, setFallbackOtp] = useState(''); // shown on screen if email fails
   const [otpInputs, setOtpInputs] = useState(['', '', '', '']);
   const [countdown, setCountdown] = useState(0);
   const inputRefs = useRef([]);
@@ -178,8 +178,13 @@ export default function Checkout() {
     try {
       const res = await sendOtpApi(form.phone, form.email);
       if (res.success) {
-        setMockOtpCode(res.mockOtp || '');
-        setEmailSent(res.emailSent || false);
+        setEmailSent(res.emailSent !== false);
+        // If email failed, show OTP on screen as fallback
+        if (!res.emailSent && res.otp) {
+          setFallbackOtp(res.otp);
+        } else {
+          setFallbackOtp('');
+        }
         setOtpInputs(['', '', '', '']);
         setStep(1);
         setCountdown(30);
@@ -225,7 +230,12 @@ export default function Checkout() {
     try {
       const res = await sendOtpApi(form.phone, form.email);
       if (res.success) {
-        setMockOtpCode(res.mockOtp || '');
+        setEmailSent(res.emailSent !== false);
+        if (!res.emailSent && res.otp) {
+          setFallbackOtp(res.otp);
+        } else {
+          setFallbackOtp('');
+        }
         setOtpError('');
         setOtpInputs(['', '', '', '']);
         setCountdown(30);
@@ -460,18 +470,27 @@ export default function Checkout() {
                   <h2 className="checkout-form-title">Verify Your Identity</h2>
 
                   <p className="otp-description">
-                    A 4-digit verification code has been sent to <strong>{form.email}</strong>. Please check your inbox (and spam folder).
+                    We've sent a 4-digit verification code to <strong>{form.email}</strong>. Please check your inbox and spam folder.
                   </p>
-                  {mockOtpCode && (
-                    <div style={{ marginTop: '10px', padding: '10px 15px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '6px', fontSize: '13px', textAlign: 'center', fontWeight: 'bold', border: '1px solid #ffeeba', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <span>🔑 local testing mode</span>
-                      <span style={{ fontSize: '18px', color: '#b8960c', letterSpacing: '2px' }}>OTP Code: {mockOtpCode}</span>
-                    </div>
-                  )}
 
                   {otpError && (
                     <div className="amz-alert error">
                       <Info size={15} /> {otpError}
+                    </div>
+                  )}
+
+                  {/* Show OTP on screen if email delivery failed */}
+                  {fallbackOtp && (
+                    <div style={{
+                      background: '#fffbeb', border: '1px solid #f59e0b', borderRadius: '8px',
+                      padding: '16px', marginBottom: '16px', textAlign: 'center'
+                    }}>
+                      <p style={{ margin: '0 0 8px', fontSize: '13px', color: '#92400e', fontWeight: '600' }}>
+                        ⚠️ Email could not be delivered. Use this code instead:
+                      </p>
+                      <span style={{ fontSize: '32px', fontWeight: '700', letterSpacing: '8px', color: '#b8960c' }}>
+                        {fallbackOtp}
+                      </span>
                     </div>
                   )}
 
