@@ -4,6 +4,10 @@
   min-height: 100vh;
 }
 
+@media (max-width: 1024px) {
+  .cart-page { padding-top: 120px; }
+}
+
 .empty-cart {
   display: flex;
   flex-direction: column;

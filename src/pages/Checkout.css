@@ -1,6 +1,11 @@
 /* ============= CHECKOUT PAGE ============= */
 .checkout-page { padding: 100px 0 80px; min-height: 100vh; background: #f3f3f3; }
 
+@media (max-width: 1024px) {
+  .checkout-page { padding-top: 120px; }
+}
+
+
 /* Steps */
 .checkout-steps {
   display: flex;

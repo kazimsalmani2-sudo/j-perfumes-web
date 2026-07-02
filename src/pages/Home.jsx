@@ -151,31 +151,67 @@ function Collections() {
 
 // =================== BEST SELLERS ===================
 function BestSellers() {
-  const bestsellers = products.filter(p => p.isBestseller || p.id <= 4);
+  const navigate = useNavigate();
+  const bestsellers = products.filter(p => p.isBestseller).slice(0, 4);
+
+  const getBadgeClass = (type) => {
+    switch (type) {
+      case 'gold': return 'badge badge-gold';
+      case 'dark': return 'badge badge-dark';
+      default: return 'badge badge-gold';
+    }
+  };
 
   return (
     <section className="section bestsellers-section">
       <div className="container">
-        <div className="section-center-header">
-          <div className="section-label">
-            <span>SIGNATURE SCENTS</span>
+        <div className="section-header">
+          <div>
+            <div className="section-label line-left">
+              <span>SIGNATURE SCENTS</span>
+            </div>
+            <h2 className="section-title">Best Sellers</h2>
           </div>
-          <h2 className="section-title">Best Sellers</h2>
-          <p className="section-subtitle">
-            Our most-loved fragrances — worn by thousands, remembered forever.
-          </p>
-        </div>
-
-        <div className="products-grid-4">
-          {bestsellers.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        <div className="section-cta">
-          <Link to="/shop" className="btn btn-outline" id="view-all-fragrances-btn">
-            VIEW ALL FRAGRANCES <ArrowRight size={14} />
+          <Link to="/shop" className="explore-link" id="view-all-fragrances-btn">
+            VIEW ALL <ArrowRight size={14} />
           </Link>
+        </div>
+
+        <div className="collections-grid bestsellers-grid">
+          {bestsellers.map((product, idx) => (
+            <Link
+              key={product.id}
+              to={`/shop?product=${product.slug}`}
+              className={`collection-card ${idx === 1 ? 'highlighted' : ''}`}
+              id={`bestseller-${product.id}`}
+            >
+              <div className="collection-image">
+                {product.badge && (
+                  <span className={getBadgeClass(product.badgeType)}>{product.badge}</span>
+                )}
+                <img src={product.image} alt={product.name} loading="lazy" />
+              </div>
+              <div className="collection-body">
+                <div>
+                  <div className="collection-subtitle">{product.notes}</div>
+                  <h3 className="collection-name">{product.name}</h3>
+                  <div className="bestseller-price">₹{product.price.toLocaleString()}</div>
+                </div>
+                <button
+                  className="collection-arrow"
+                  id={`bestseller-arrow-${product.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navigate(`/product/${product.slug}`);
+                  }}
+                  aria-label={`View ${product.name}`}
+                >
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

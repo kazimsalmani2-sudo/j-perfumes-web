@@ -4,6 +4,10 @@
   min-height: 100vh;
 }
 
+@media (max-width: 1024px) {
+  .product-detail-page { padding-top: 120px; }
+}
+
 .breadcrumb {
   display: flex;
   align-items: center;

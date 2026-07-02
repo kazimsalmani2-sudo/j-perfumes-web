@@ -306,6 +306,19 @@
   text-align: center;
 }
 
+/* Bestsellers 4-col grid */
+.bestsellers-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.bestseller-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold-dark);
+  margin-top: 4px;
+  font-family: var(--font-serif);
+}
+
 /* ========= NEW ARRIVALS (DARK) ========= */
 .new-arrivals-section {
   background: var(--black);
@@ -696,6 +709,10 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .bestsellers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -704,7 +721,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 120px 0 60px;
+    padding: 160px 0 60px;
   }
 
   .hero-heading {
@@ -731,15 +748,23 @@
   }
 
   .products-grid-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .collections-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .bestsellers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
   }
 
   .new-arrivals-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .story-features {
@@ -764,5 +789,18 @@
 
   .section-title {
     font-size: 28px;
+  }
+
+  /* Very small screens: keep 2 cols but tighter */
+  .collection-image {
+    height: 180px;
+  }
+
+  .collection-name {
+    font-size: 15px;
+  }
+
+  .new-arrival-image {
+    height: 140px;
   }
 }

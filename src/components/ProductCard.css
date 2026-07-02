@@ -230,3 +230,43 @@
 .add-to-cart-btn.added {
   background: #2D6A2D;
 }
+
+/* ===== MOBILE: 2-column compact card ===== */
+@media (max-width: 768px) {
+  .product-card-body {
+    padding: 10px;
+  }
+
+  .product-name {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .product-notes {
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .product-stars {
+    margin-bottom: 8px;
+  }
+
+  .product-price {
+    font-size: 13px;
+  }
+
+  .product-original {
+    font-size: 10px;
+  }
+
+  .add-to-cart-btn {
+    padding: 6px 8px;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .review-count {
+    display: none;
+  }
+}

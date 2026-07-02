@@ -232,15 +232,7 @@
 }
 
 .hamburger-btn {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--text-dark);
+  display: none !important;
 }
 
 /* Inline Search Bar */
@@ -450,9 +442,56 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .navbar-links { display: none; }
-  .hamburger-btn { display: flex; }
-  .navbar-inner { padding: 0 24px; }
+  .hamburger-btn { display: none !important; }
+  .navbar-inner {
+    padding: 0 24px;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 64px;
+  }
+
+  /* Top row: logo + icons */
+  .navbar-logo {
+    order: 1;
+  }
+  .navbar-icons {
+    order: 2;
+  }
+
+  /* Nav links below top row, full width, scrollable */
+  .navbar-links {
+    order: 3;
+    display: flex !important;
+    width: 100%;
+    overflow-x: auto;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border-light);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+  .navbar-links li {
+    flex-shrink: 0;
+  }
+  .nav-link {
+    display: block;
+    padding: 10px 14px;
+    font-size: 12px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-link::after {
+    display: none;
+  }
+  .nav-link.active,
+  .nav-link:hover {
+    border-bottom-color: var(--gold-dark);
+    color: var(--gold-dark);
+  }
 }
 
 @media (max-width: 768px) {
@@ -482,7 +521,7 @@
   .search-dropdown {
     width: 100%;
     position: fixed;
-    top: 72px;
+    top: auto;
     right: 0;
     left: 0;
     border-radius: 0;
@@ -499,9 +538,9 @@
 }
 
 @media (max-width: 480px) {
-  .navbar-inner { padding: 0 16px; }
+  .navbar-inner { padding: 0 12px; }
   .icon-btn { width: 32px; height: 32px; }
-  .mobile-menu { width: 100%; }
+  .nav-link { padding: 10px 12px; font-size: 11.5px; }
   .navbar-search-inline.active {
     width: calc(100% - 32px);
     right: 16px;
