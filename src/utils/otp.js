@@ -5,9 +5,10 @@
 const API_BASE = import.meta.env.VITE_PAYMENT_API_URL || 'http://localhost:5000';
 
 /**
- * Request server to generate and send OTP
- * @param {string} phone 
- * @returns {Promise<{success: boolean, message: string, mockOtp?: string}>}
+ * Request server to generate and send OTP via email.
+ * Returns { success, emailSent, message } on success,
+ * or { success: false, error } if email delivery failed.
+ * The OTP is NEVER returned in the response for security.
  */
 export const sendOtpApi = async (phone, email) => {
   try {

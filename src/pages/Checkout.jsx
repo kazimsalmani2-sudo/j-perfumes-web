@@ -109,7 +109,6 @@ export default function Checkout() {
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [otpError, setOtpError] = useState('');
   const [emailSent, setEmailSent] = useState(false);
-  const [fallbackOtp, setFallbackOtp] = useState(''); // shown on screen if email fails
   const [otpInputs, setOtpInputs] = useState(['', '', '', '']);
   const [countdown, setCountdown] = useState(0);
   const inputRefs = useRef([]);
@@ -177,20 +176,15 @@ export default function Checkout() {
     // Send OTP
     try {
       const res = await sendOtpApi(form.phone, form.email);
-      if (res.success) {
-        setEmailSent(res.emailSent !== false);
-        // If email failed, show OTP on screen as fallback
-        if (!res.emailSent && res.otp) {
-          setFallbackOtp(res.otp);
-        } else {
-          setFallbackOtp('');
-        }
+      if (res.success && res.emailSent) {
+        setEmailSent(true);
         setOtpInputs(['', '', '', '']);
         setStep(1);
         setCountdown(30);
         window.scrollTo(0, 0);
       } else {
-        setOtpError(res.error || 'Failed to send verification code. Please try again.');
+        // Email failed — show error, stay on delivery step
+        setOtpError(res.error || 'Failed to send verification code. Please check your email and try again.');
       }
     } catch (err) {
       setOtpError('Error sending OTP. Please check your network connection.');
@@ -229,19 +223,14 @@ export default function Checkout() {
     setOtpError('');
     try {
       const res = await sendOtpApi(form.phone, form.email);
-      if (res.success) {
-        setEmailSent(res.emailSent !== false);
-        if (!res.emailSent && res.otp) {
-          setFallbackOtp(res.otp);
-        } else {
-          setFallbackOtp('');
-        }
+      if (res.success && res.emailSent) {
+        setEmailSent(true);
         setOtpError('');
         setOtpInputs(['', '', '', '']);
         setCountdown(30);
         setTimeout(() => inputRefs.current[0]?.focus(), 50);
       } else {
-        setOtpError(res.error || 'Failed to resend verification code.');
+        setOtpError(res.error || 'Failed to resend verification code. Please try again.');
       }
     } catch (err) {
       setOtpError('Error resending verification code.');
@@ -479,20 +468,8 @@ export default function Checkout() {
                     </div>
                   )}
 
-                  {/* Show OTP on screen if email delivery failed */}
-                  {fallbackOtp && (
-                    <div style={{
-                      background: '#fffbeb', border: '1px solid #f59e0b', borderRadius: '8px',
-                      padding: '16px', marginBottom: '16px', textAlign: 'center'
-                    }}>
-                      <p style={{ margin: '0 0 8px', fontSize: '13px', color: '#92400e', fontWeight: '600' }}>
-                        ⚠️ Email could not be delivered. Use this code instead:
-                      </p>
-                      <span style={{ fontSize: '32px', fontWeight: '700', letterSpacing: '8px', color: '#b8960c' }}>
-                        {fallbackOtp}
-                      </span>
-                    </div>
-                  )}
+
+
 
                   <div className="otp-digits-container">
                     {otpInputs.map((digit, idx) => (
