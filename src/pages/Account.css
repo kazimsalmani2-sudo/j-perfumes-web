@@ -300,7 +300,11 @@
 }
 
 .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   padding: 30px;
+  padding-right: 60px; /* Leave space for absolute close button */
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -308,13 +312,14 @@
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 0;
   color: var(--text-main);
 }
 
 .modal-order-date {
   font-size: 14px;
   color: var(--text-muted);
+  margin-bottom: 2px; /* Align nicely with order ID baseline */
 }
 
 .modal-body {
@@ -475,6 +480,15 @@
 }
 
 @media (max-width: 640px) {
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-right: 60px;
+  }
+  .modal-order-date {
+    margin-bottom: 0;
+  }
   .modal-body {
     grid-template-columns: 1fr;
     gap: 30px;

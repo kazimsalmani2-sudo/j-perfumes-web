@@ -233,3 +233,25 @@
     padding: 24px;
   }
 }
+
+/* ============= WIDE SCREENS (Full HD, 2K, 4K) ============= */
+@media (min-width: 1920px) {
+  .faq-grid {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 40px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .faq-grid {
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 50px;
+  }
+}
+
+@media (min-width: 3840px) {
+  .faq-grid {
+    grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
+    gap: 60px;
+  }
+}

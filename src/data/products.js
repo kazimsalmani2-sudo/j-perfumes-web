@@ -49,7 +49,7 @@ export const products = [
     ],
     price: 3600,
     originalPrice: null,
-    image: "/noir_elite.png",
+    image: "/aqua_lumiere.png",
     rating: 4.6,
     reviews: 31,
     inStock: true,

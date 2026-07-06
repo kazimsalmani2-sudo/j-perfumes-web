@@ -1,12 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { products } from '../data/products';
+import { products as staticProducts } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import './Attars.css';
 
-const attarProducts = products.filter(p => p.fragranceFamily === 'Oriental' || p.collection === 'attars');
-
 export default function Attars() {
+  const [products, setProducts] = useState(staticProducts);
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products in Attars:", err));
+  }, []);
+
+  const attarProducts = products.filter(p => p.fragranceFamily === 'Oriental' || p.collection === 'attars' || p.category === 'attars');
   return (
     <main className="attars-page">
       {/* Dark Gold Hero */}

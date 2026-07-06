@@ -138,13 +138,13 @@
   font-family: var(--font-serif);
   font-size: 16px;
   font-weight: 600;
-  color: var(--text-dark);
+  color: #1A1A1A !important;
   margin-bottom: 8px;
   line-height: 1.3;
 }
 
 .dark-card .product-name {
-  color: var(--white);
+  color: var(--white) !important;
 }
 
 .product-stars {
@@ -268,5 +268,90 @@
 
   .review-count {
     display: none;
+  }
+}
+
+/* ============= WIDE SCREENS (Full HD, 2K, 4K) ============= */
+@media (min-width: 1920px) {
+  .product-card-body {
+    padding: 22px;
+  }
+  .product-name {
+    font-size: 19px;
+    margin-bottom: 12px;
+  }
+  .product-notes {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .product-price {
+    font-size: 19px;
+  }
+  .product-original {
+    font-size: 14px;
+  }
+  .add-to-cart-btn {
+    padding: 11px 18px;
+    font-size: 12px;
+  }
+  .wishlist-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .product-card-body {
+    padding: 28px;
+  }
+  .product-name {
+    font-size: 23px;
+    margin-bottom: 16px;
+  }
+  .product-notes {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .product-price {
+    font-size: 23px;
+  }
+  .product-original {
+    font-size: 17px;
+  }
+  .add-to-cart-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+  .wishlist-btn {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (min-width: 3840px) {
+  .product-card-body {
+    padding: 38px;
+  }
+  .product-name {
+    font-size: 30px;
+    margin-bottom: 22px;
+  }
+  .product-notes {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .product-price {
+    font-size: 30px;
+  }
+  .product-original {
+    font-size: 22px;
+  }
+  .add-to-cart-btn {
+    padding: 20px 32px;
+    font-size: 18px;
+  }
+  .wishlist-btn {
+    width: 64px;
+    height: 64px;
   }
 }

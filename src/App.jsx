@@ -5,10 +5,12 @@ import WhatsAppButton from './components/WhatsAppButton';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import { AdminAuthProvider } from './context/AdminAuthContext';
 
 // Components
 import AuthGate from './components/AuthGate';
 import ChatBot from './components/ChatBot';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 // Pages
 import LoginPage from './pages/LoginPage';
@@ -28,18 +30,29 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import Wishlist from './pages/Wishlist';
 import Account from './pages/Account';
 
+// Admin Pages
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminCoupons from './pages/admin/AdminCoupons';
+import AdminSettings from './pages/admin/AdminSettings';
+
 import './App.css';
 
 function AppContent() {
   const location = useLocation();
   const publicAuthRoutes = ["/login", "/register", "/forgot-password"];
   const isAuthPage = publicAuthRoutes.includes(location.pathname);
+  const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <div className="app-container">
       <ScrollToTop />
-      {!isAuthPage && <Navbar />}
-      <div className="main-content">
+      {!isAuthPage && !isAdminPage && <Navbar />}
+      <div className={isAdminPage ? '' : 'main-content'}>
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
@@ -60,11 +73,21 @@ function AppContent() {
           <Route path="/order-confirmation" element={<AuthGate><OrderConfirmation /></AuthGate>} />
           <Route path="/wishlist" element={<AuthGate><Wishlist /></AuthGate>} />
           <Route path="/account" element={<AuthGate><Account /></AuthGate>} />
+
+          {/* Admin routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+          <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
+          <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
+          <Route path="/admin/users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
+          <Route path="/admin/analytics" element={<AdminProtectedRoute><AdminAnalytics /></AdminProtectedRoute>} />
+          <Route path="/admin/coupons" element={<AdminProtectedRoute><AdminCoupons /></AdminProtectedRoute>} />
+          <Route path="/admin/settings" element={<AdminProtectedRoute><AdminSettings /></AdminProtectedRoute>} />
         </Routes>
       </div>
-      {!isAuthPage && <Footer />}
-      {!isAuthPage && <WhatsAppButton />}
-      {!isAuthPage && <ChatBot />}
+      {!isAuthPage && !isAdminPage && <Footer />}
+      {!isAuthPage && !isAdminPage && <WhatsAppButton />}
+      {!isAuthPage && !isAdminPage && <ChatBot />}
     </div>
   );
 }
@@ -73,9 +96,11 @@ function App() {
   return (
     <CartProvider>
       <Router>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
+        <AdminAuthProvider>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </AdminAuthProvider>
       </Router>
     </CartProvider>
   );

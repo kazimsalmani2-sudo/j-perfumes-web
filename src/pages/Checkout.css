@@ -528,3 +528,55 @@
   .card-logo { width: 38px; height: 25px; }
   .amz-use-payment-btn { width: 100%; justify-content: center; }
 }
+
+/* ============= WIDE SCREENS (Full HD, 2K, 4K) ============= */
+@media (min-width: 1920px) {
+  .checkout-layout {
+    grid-template-columns: 1fr 450px;
+    gap: 60px;
+  }
+  .checkout-form {
+    padding: 40px;
+  }
+  .checkout-sidebar {
+    padding: 30px;
+  }
+  .checkout-item img {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .checkout-layout {
+    grid-template-columns: 1fr 550px;
+    gap: 80px;
+  }
+  .checkout-form {
+    padding: 50px;
+  }
+  .checkout-sidebar {
+    padding: 40px;
+  }
+  .checkout-item img {
+    width: 86px;
+    height: 86px;
+  }
+}
+
+@media (min-width: 3840px) {
+  .checkout-layout {
+    grid-template-columns: 1fr 700px;
+    gap: 100px;
+  }
+  .checkout-form {
+    padding: 68px;
+  }
+  .checkout-sidebar {
+    padding: 56px;
+  }
+  .checkout-item img {
+    width: 110px;
+    height: 110px;
+  }
+}

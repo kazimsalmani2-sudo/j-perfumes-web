@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
-import { products } from '../data/products';
+import { products as staticProducts } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import './Shop.css';
 
@@ -15,6 +15,20 @@ const SORT_OPTIONS = [
 
 export default function Shop() {
   const [searchParams] = useSearchParams();
+  const [products, setProducts] = useState(staticProducts);
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products:", err));
+  }, []);
+
   const [filters, setFilters] = useState({
     category: 'all',
     fragranceFamily: 'all',

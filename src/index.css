@@ -27,6 +27,7 @@
   --section-padding: 100px 0;
   --container-max: 1280px;
   --container-padding: 0 40px;
+  --navbar-height: 72px;
 
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
@@ -306,5 +307,85 @@ h1, h2, h3, h4, h5, h6 {
   :root {
     --container-padding: 0 16px;
     --section-padding: 50px 0;
+  }
+}
+
+/* ============= WIDE SCREENS (Full HD, 2K, 4K) ============= */
+@media (min-width: 1440px) {
+  :root {
+    --container-max: 1360px;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --container-max: 1520px;
+    --section-padding: 120px 0;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --container-max: 1800px;
+    --container-padding: 0 60px;
+    --section-padding: 140px 0;
+  }
+  body {
+    font-size: 17px;
+  }
+  .btn {
+    font-size: 13px;
+    padding: 16px 32px;
+  }
+  .section-label {
+    font-size: 12px;
+  }
+  .badge {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --container-max: 2400px;
+    --container-padding: 0 80px;
+    --section-padding: 180px 0;
+  }
+  body {
+    font-size: 19px;
+  }
+  .btn {
+    font-size: 15px;
+    padding: 20px 40px;
+  }
+  .section-label {
+    font-size: 14px;
+  }
+  .badge {
+    font-size: 12px;
+    padding: 7px 16px;
+  }
+}
+
+@media (min-width: 3840px) {
+  :root {
+    --container-max: 3400px;
+    --container-padding: 0 120px;
+    --section-padding: 240px 0;
+  }
+  body {
+    font-size: 22px;
+  }
+  .btn {
+    font-size: 18px;
+    padding: 26px 52px;
+  }
+  .section-label {
+    font-size: 16px;
+  }
+  .badge {
+    font-size: 14px;
+    padding: 9px 20px;
   }
 }

@@ -317,3 +317,22 @@
   }
 }
 
+/* ============= WIDE SCREENS (Full HD, 2K, 4K) ============= */
+@media (min-width: 1600px) {
+  .shop-products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 2200px) {
+  .shop-products-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 2800px) {
+  .shop-products-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+

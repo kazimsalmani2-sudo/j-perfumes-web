@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Mail, CheckCircle, Diamond } from 'lucide-react';
-import { products, collections, testimonials } from '../data/products';
+import { products as staticProducts, collections, testimonials } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
 import { db } from '../utils/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import founderImg from '../assets/images/founder.jpg';
+import heroPerfumeImg from '../assets/images/hero-perfume.png';
 import './Home.css';
 
 // =================== HERO ===================
@@ -57,7 +58,7 @@ function Hero() {
         {/* Right */}
         <div className="hero-right">
           <div className="hero-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop" alt="Ambre Lumière — Luxury Perfume" className="hero-image" />
+            <img src={heroPerfumeImg} alt="J Perfumewala — Luxury Perfume" className="hero-image" />
             <Link
               to="/shop"
               className="hero-price-badge"
@@ -150,7 +151,7 @@ function Collections() {
 }
 
 // =================== BEST SELLERS ===================
-function BestSellers() {
+function BestSellers({ products }) {
   const navigate = useNavigate();
   const bestsellers = products.filter(p => p.isBestseller).slice(0, 4);
 
@@ -219,9 +220,9 @@ function BestSellers() {
 }
 
 // =================== NEW ARRIVALS (DARK) ===================
-function NewArrivals() {
+function NewArrivals({ products }) {
   const { addToCart } = useCart();
-  const newProducts = products.filter(p => p.isNew).slice(0, 3);
+  const newProducts = products.filter(p => p.isNew);
 
   const [addedIds, setAddedIds] = useState([]);
 
@@ -465,12 +466,26 @@ function Newsletter() {
 
 // =================== HOME PAGE ===================
 export default function Home() {
+  const [products, setProducts] = useState(staticProducts);
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products:", err));
+  }, []);
+
   return (
     <main>
       <Hero />
       <Collections />
-      <BestSellers />
-      <NewArrivals />
+      <BestSellers products={products} />
+      <NewArrivals products={products} />
       <OurStory />
       <Testimonials />
       <Newsletter />

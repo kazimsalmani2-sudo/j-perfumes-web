@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { X, Send, Sparkles, ShoppingCart, RotateCcw } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { products } from '../data/products';
+import { products as staticProducts } from '../data/products';
 import './ChatBot.css';
 
 const BACKEND_URL = import.meta.env.VITE_PAYMENT_API_URL || 'http://localhost:5000';
@@ -51,7 +51,7 @@ function TypingIndicator() {
   );
 }
 
-function ProductCard({ productId, onAddToCart }) {
+function ProductCard({ productId, products, onAddToCart }) {
   const product = products.find(p => p.id === productId);
   if (!product) return null;
 
@@ -105,9 +105,22 @@ function QuickReply({ options, onSelect }) {
 }
 
 export default function ChatBot() {
+  const [products, setProducts] = useState(staticProducts);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]); // {role, content, type, products}
   const [input, setInput] = useState('');
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products in ChatBot:", err));
+  }, []);
   const [loading, setLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [quickReplies, setQuickReplies] = useState([]);
@@ -357,6 +370,7 @@ export default function ChatBot() {
                         <ProductCard
                           key={id}
                           productId={id}
+                          products={products}
                           onAddToCart={handleAddToCart}
                         />
                       ))}

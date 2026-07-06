@@ -1,12 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { products } from '../data/products';
+import { products as staticProducts } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import './GiftSets.css';
 
-const giftSetProducts = products.filter(p => p.collection === 'gift-sets' || p.category === 'gift-sets');
-
 export default function GiftSets() {
+  const [products, setProducts] = useState(staticProducts);
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products in GiftSets:", err));
+  }, []);
+
+  const giftSetProducts = products.filter(p => p.collection === 'gift-sets' || p.category === 'gift-sets');
   return (
     <main className="gift-sets-page">
       {/* Luxury Hero */}

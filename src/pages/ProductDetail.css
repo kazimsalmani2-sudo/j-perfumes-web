@@ -133,7 +133,7 @@
 }
 
 .product-detail-price {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 36px;
   font-weight: 600;
   color: var(--gold-dark);

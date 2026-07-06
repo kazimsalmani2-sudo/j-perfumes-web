@@ -3,15 +3,28 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Search, Heart, User, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { products } from '../data/products';
+import { products as staticProducts } from '../data/products';
 import './Navbar.css';
 
 export default function Navbar() {
   const { cartCount, wishlistItems } = useCart();
   const { user, logout, loggingOut } = useAuth();
+  const [products, setProducts] = useState(staticProducts);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+    fetch(`${apiBase}/api/products`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(err => console.error("Error fetching products in Navbar:", err));
+  }, []);
   const [searchResults, setSearchResults] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const searchRef = useRef(null);
@@ -70,6 +83,17 @@ export default function Navbar() {
     { to: '/contact', label: 'Contact' },
   ];
 
+  const getUserInitials = (user) => {
+    if (!user) return '';
+    if (user.displayName) {
+      return user.displayName.charAt(0).toUpperCase();
+    }
+    if (user.email) {
+      return user.email.charAt(0).toUpperCase();
+    }
+    return 'U';
+  };
+
   const handleSearchResult = (product) => {
     setSearchOpen(false);
     setSearchQuery('');
@@ -102,64 +126,42 @@ export default function Navbar() {
 
           {/* Right Icons */}
           <div className="navbar-icons">
-            <div 
-              ref={searchContainerRef} 
-              className={`navbar-search-inline ${searchOpen || searchQuery ? 'active' : ''}`}
-            >
+            {/* Search */}
+            <div className="navbar-search-container" ref={searchContainerRef}>
               <button
-                id="search-btn"
-                className="icon-btn search-icon-btn"
-                onClick={() => {
-                  if (searchOpen && !searchQuery) {
-                    setSearchOpen(false);
-                  } else {
-                    setSearchOpen(true);
-                    setTimeout(() => searchRef.current?.focus(), 100);
-                  }
-                }}
+                className="icon-btn"
+                onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search"
               >
                 <Search size={18} />
               </button>
-              
-              <div className="search-input-wrapper">
-                <input
-                  ref={searchRef}
-                  type="text"
-                  placeholder="Search fragrances..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  onFocus={() => setSearchOpen(true)}
-                  id="search-input"
-                />
-                {searchQuery && (
-                  <button className="search-clear-btn" onClick={() => { setSearchQuery(''); searchRef.current?.focus(); }}>
-                    <X size={14} />
-                  </button>
-                )}
-              </div>
-
-              {/* Dropdown Results */}
-              {searchOpen && (searchQuery || searchResults.length > 0) && (
-                <div className="search-dropdown animate-fade-in">
-                  {searchResults.length > 0 ? (
-                    searchResults.map(product => (
-                      <button
-                        key={product.id}
-                        className="search-result-item"
-                        onClick={() => handleSearchResult(product)}
-                      >
-                        <img src={product.image} alt={product.name} />
-                        <div style={{ flex: 1, textAlign: 'left' }}>
-                          <div className="search-result-name">{product.name}</div>
-                          <div className="search-result-notes">{product.notes}</div>
-                        </div>
-                        <div className="search-result-price">₹{product.price.toLocaleString()}</div>
-                      </button>
-                    ))
-                  ) : searchQuery ? (
-                    <div className="search-no-results">No fragrances found for "{searchQuery}"</div>
-                  ) : null}
+              {searchOpen && (
+                <div className="navbar-search-dropdown animate-slide-down">
+                  <div className="search-input-wrapper">
+                    <Search size={16} className="search-input-icon" />
+                    <input
+                      ref={searchRef}
+                      type="text"
+                      placeholder="Search perfumes, attars, notes..."
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  {searchResults.length > 0 && (
+                    <ul className="search-results-list">
+                      {searchResults.map(p => (
+                        <li key={p.id} onClick={() => handleSearchResult(p)}>
+                          <div className="search-result-item">
+                            <img src={p.image.startsWith('http') ? p.image : `http://localhost:5173${p.image}`} alt={p.name} />
+                            <div>
+                              <div className="result-name">{p.name}</div>
+                              <div className="result-notes">{p.notes}</div>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               )}
             </div>
@@ -171,21 +173,40 @@ export default function Navbar() {
               )}
             </Link>
 
+            <Link to="/cart" id="cart-btn" className="icon-btn cart-icon-btn" aria-label="Cart">
+              <ShoppingCart size={18} />
+              {cartCount > 0 && (
+                <span className="cart-badge">{cartCount}</span>
+              )}
+            </Link>
+
             <div className="navbar-auth-group">
               {user ? (
-                <>
-                  <Link to="/account" id="account-btn" className="icon-btn" aria-label="Account">
-                    <User size={18} />
-                  </Link>
-                  <button
-                    onClick={logout}
-                    className="navbar-logout-btn hide-on-mobile"
-                    disabled={loggingOut}
-                    title="Logout"
-                  >
-                    {loggingOut ? "..." : "Logout"}
-                  </button>
-                </>
+                <Link
+                  to="/account"
+                  id="account-btn"
+                  className="navbar-avatar-btn"
+                  aria-label="Account"
+                  style={{
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'var(--gold-dark, #b8960c)',
+                    color: '#fff',
+                    fontWeight: '700',
+                    fontSize: '12px',
+                    letterSpacing: '0.5px',
+                    border: '1.5px solid rgba(255,255,255,0.1)',
+                    flexShrink: 0,
+                    marginLeft: '8px'
+                  }}
+                >
+                  {getUserInitials(user)}
+                </Link>
               ) : (
                 <>
                   <Link to="/login" id="login-icon-btn" className="icon-btn hide-on-desktop" aria-label="Login">
@@ -210,13 +231,6 @@ export default function Navbar() {
                 </>
               )}
             </div>
-
-            <Link to="/cart" id="cart-btn" className="icon-btn cart-icon-btn" aria-label="Cart">
-              <ShoppingCart size={18} />
-              {cartCount > 0 && (
-                <span className="cart-badge">{cartCount}</span>
-              )}
-            </Link>
 
             <button
               className="hamburger-btn"
